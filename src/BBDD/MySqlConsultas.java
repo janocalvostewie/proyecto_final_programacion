@@ -269,18 +269,20 @@ Statement stdatos=connect.conexion.createStatement();
 
     public static ResultSet excelidiomas(int idCan) throws SQLException {
 Statement stidi=connect.conexion.createStatement();
-        String sql = "select idioma, nivel from idiomas where id=" + idCan + ";";
-        rs = stidi.executeQuery(sql);
-        return rs;
+ResultSet rsidi=null;
+        String sql = "select idioma, nivel from idiomas where idCandidato=" + idCan + ";";
+        rsidi = stidi.executeQuery(sql);
+        return rsidi;
     }
 
     public static ResultSet excelformacion(int idCan) throws SQLException {
-       
+       ResultSet rsformi=null;
+        Statement stfor=connect.conexion.createStatement();
         String sql = "select descripcion from formacion where idCandidato=" + idCan + ";";
         String niv=null;
-        rs = MySql.connect.st.executeQuery(sql);
+        rsformi = stfor.executeQuery(sql);
    
-return rs;
+return rsformi;
     }
 
 }

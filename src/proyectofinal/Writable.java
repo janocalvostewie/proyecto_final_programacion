@@ -2,6 +2,8 @@ package proyectofinal;
 
 import BBDD.MySql;
 import static BBDD.MySql.connect;
+import static BBDD.MySqlConsultas.excelformacion;
+import static BBDD.MySqlConsultas.excelidiomas;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -83,7 +85,7 @@ public class Writable {
         cv.setFormat(timesBoldUnderline);
 
         addCaption(sheet, 0, 0, "ID");
-        addCaption(sheet, 1, 0, "Nombre");
+        addCaption(sheet, 1, 0, "Nombre       ");
         addCaption(sheet, 2, 0, "Apellidos            ");
         addCaption(sheet, 3, 0, "DNI");
         addCaption(sheet, 4, 0, "Dirección               ");
@@ -102,7 +104,8 @@ public class Writable {
         String temporal = null;
         capturaparaexcel();
         ResultSet rsid = null;
-        ResultSet rsdatos = null;
+        ResultSet rsfor = null;
+        ResultSet rsidi = null;
         Statement st2 = connect.conexion.createStatement();
         int filas = 0;
         int y = 0;
@@ -115,19 +118,43 @@ public class Writable {
         while (rsid.next()) {
             filas = filas + 1;
             idCan = rsid.getInt(1);
-
+int c=0;
             //BUCLE COLUMNAS
-            for (int c = 0; c < columnaDatosPersonales.length; c++) {
+            for ( c = 0; c < columnaDatosPersonales.length; c++) {
                 y = c + 1;
                 temporal = rsid.getString(y);
                 addLabel(sheet, c, filas, temporal);
 
+                
                 //FORMATO A LAS CELDAS
                 CellView celdas = sheet.getColumnView(c);
                 celdas.setAutosize(true);
                 sheet.setColumnView(c, celdas);
             }
-
+           rsfor=excelformacion(idCan);
+           
+            
+           
+            while(rsfor.next()){
+                filas = filas + 1;
+             String tempfor=rsfor.getString(1);
+              addLabel(sheet, 1, filas, "FORMACIÓN:");
+             addLabel(sheet, 2, filas, tempfor);
+            
+            }
+            
+            rsidi=excelidiomas(idCan);
+            while(rsidi.next()){
+                filas=filas+1;
+            String iditemp=rsidi.getString(1);
+             String idiniv=rsidi.getString(2);
+             addLabel(sheet, 1, filas, "IDIOMAS:");
+             addLabel(sheet, 2, filas, iditemp);
+             addLabel(sheet, 3, filas, idiniv);
+            
+            
+            }
+            filas=filas+1;
         }
 
     }

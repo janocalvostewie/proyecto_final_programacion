@@ -134,21 +134,23 @@ int c=0;
            rsfor=excelformacion(idCan);
            
             
-           
+           filas = filas + 1;
             while(rsfor.next()){
                 filas = filas + 1;
              String tempfor=rsfor.getString(1);
-              addLabel(sheet, 1, filas, "FORMACIÓN:");
+              addLabel(sheet, 1, filas, "Formación:");
+              
              addLabel(sheet, 2, filas, tempfor);
             
             }
             
             rsidi=excelidiomas(idCan);
+            filas = filas + 1;
             while(rsidi.next()){
                 filas=filas+1;
             String iditemp=rsidi.getString(1);
              String idiniv=rsidi.getString(2);
-             addLabel(sheet, 1, filas, "IDIOMAS:");
+             addLabel(sheet, 1, filas, "Idiomas:");
              addLabel(sheet, 2, filas, iditemp);
              addLabel(sheet, 3, filas, idiniv);
             

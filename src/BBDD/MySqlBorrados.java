@@ -15,10 +15,17 @@ public class MySqlBorrados extends MySql{
     
     public static void borradoCascada(int idCan){
     
-      String Query = "call borradocascada("+idCan+");";
+//delete from formacion where idCandidato=idCandidato;
+//delete from candidatos where id=idCandidato;
+      String Query = "delete from idiomas where idCandidato="+idCan+";";
+      String Query2 = "delete from formacion where idCandidato="+idCan+";";
+      String Query3 = "delete from candidatos where id="+idCan+";";
         try {
 
-            MySql.connect.st.executeQuery(Query);
+            MySql.connect.st.executeUpdate(Query);
+             MySql.connect.st.executeUpdate(Query2);
+             MySql.connect.st.executeUpdate(Query3);
+             
             JOptionPane.showMessageDialog(null, "Candidato Borrado");
         } catch (SQLException ex) {
             Logger.getLogger(MySql.class.getName()).log(Level.SEVERE, null, ex);

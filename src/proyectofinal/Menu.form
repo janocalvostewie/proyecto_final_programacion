@@ -955,13 +955,13 @@
                                           <Component id="bExportExcel" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="78" max="32767" attributes="0"/>
+                                  <EmptySpace pref="83" max="32767" attributes="0"/>
                                   <Component id="jScrollPane6" min="-2" pref="422" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="47" max="32767" attributes="0"/>
+                      <EmptySpace pref="52" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1126,12 +1126,14 @@
             <Component class="javax.swing.JComboBox" name="cbIdio2">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
+                  <StringArray count="7">
                     <StringItem index="0" value="----"/>
-                    <StringItem index="1" value="Ingles"/>
-                    <StringItem index="2" value="Frances"/>
-                    <StringItem index="3" value="Italiano"/>
-                    <StringItem index="4" value="Aleman"/>
+                    <StringItem index="1" value="A1"/>
+                    <StringItem index="2" value="A2"/>
+                    <StringItem index="3" value="B1"/>
+                    <StringItem index="4" value="B2"/>
+                    <StringItem index="5" value="C1"/>
+                    <StringItem index="6" value="C2"/>
                   </StringArray>
                 </Property>
               </Properties>

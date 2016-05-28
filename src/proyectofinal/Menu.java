@@ -21,6 +21,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
+import static proyectofinal.Tablas.elimFilas;
 import static proyectofinal.Tablas.elimFilasExport;
 import static proyectofinal.Tablas.modeloForReglada;
 import static proyectofinal.Tablas.modeloIdiomas;
@@ -74,7 +75,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     public void modoConsulta(ActionEvent evt) {
-
+limpiar();
         fNombre.setBackground(VERDEBONITO);
         fID.setBackground(VERDEBONITO);
         fApellidos.setBackground(VERDEBONITO);
@@ -776,7 +777,7 @@ public class Menu extends javax.swing.JFrame {
 
         cbIdio1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "Ingles", "Frances", "Italiano", "Aleman" }));
 
-        cbIdio2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "Ingles", "Frances", "Italiano", "Aleman" }));
+        cbIdio2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "A1", "A2", "B1", "B2", "C1", "C2" }));
 
         tExportCan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -882,10 +883,10 @@ public class Menu extends javax.swing.JFrame {
                                     .addComponent(bConExpCan)
                                     .addGap(42, 42, 42)
                                     .addComponent(bExportExcel)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(15, 15, 15))))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         lpPrinci3Layout.setVerticalGroup(
             lpPrinci3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1168,7 +1169,12 @@ public class Menu extends javax.swing.JFrame {
                 fDni.setBackground(Color.white);
                 JOptionPane.showMessageDialog(null, "Faltan campos obligatorios\npara poder añadir al candidato");
             } else {
-                BBDD.MySqlInserciones.insertCandidatos(nom, ape, direcc, mail, fechNaci, fijo, movil, dni, sexo, rutaCV, codPos, localidad);
+                try {
+                    BBDD.MySqlInserciones.insertCandidatos(nom, ape, direcc, mail, fechNaci, fijo, movil, dni, sexo, rutaCV, codPos, localidad);
+                        
+                } catch (SQLException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un candidato para eliminar");
@@ -1282,7 +1288,12 @@ public class Menu extends javax.swing.JFrame {
         }
 
         BBDD.MySqlInserciones.modiCandidato(idCandidato, nom, ape, direcc, mail, fechNaci, fijo, movil, dni, sexo, rutaCV, codpos, localidad);
-
+        try {
+            BBDD.MySqlInserciones.aMayores(idCandidato);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+               
 
     }//GEN-LAST:event_bModificarActionPerformed
 
@@ -1441,10 +1452,11 @@ public class Menu extends javax.swing.JFrame {
     }
     private void bConExpCanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConExpCanActionPerformed
         elimFilasExport();
+        elimFilas();
         capturaparaexcel();
 
 //        rsDatosEx = BBDD.MySqlConsultas.rellenaExCandiR(exnombre, exapel1, exdni, excp, exloca, exsexo);
-        BBDD.MySqlConsultas.rellenaExCandiRTabla(exnombre, exapel1, exdni, excp, exloca, exsexo, exidio1, exidio2);
+        BBDD.MySqlConsultas.rellenaExCandiRTabla(exnombre, exapel1, exdni, excp, exloca, exsexo, exidio1, exidio2,exnvedu);
     }//GEN-LAST:event_bConExpCanActionPerformed
 
     private void bExportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportExcelActionPerformed

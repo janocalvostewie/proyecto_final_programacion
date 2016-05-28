@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyectofinal.Menu;
+import static proyectofinal.Menu.exnvedu;
 import proyectofinal.Tablas;
 import static proyectofinal.Tablas.modConsultaCandidatos;
 import static proyectofinal.Tablas.modeloExpCandi;
@@ -188,25 +189,14 @@ public class MySqlConsultas extends MySql {
 
     }
 
-//    public static ResultSet rellenaExCandiR(String nombre, String ape1, String dni, String codpo, String localidad, String sex) {
-//
-//        ResultSet rsExCan = null;
-//
-//        String sqlExCan = "call consultaExportacionCandidato('" + nombre + "','" + ape1 + "','" + dni + "','" + codpo + "','" + localidad + "','" + sex + "')";
-//        try {
-//            rsExCan = MySql.connect.st.executeQuery(sqlExCan);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MySql.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return rsExCan;
-//    }
 
-    public static void rellenaExCandiRTabla(String nombre, String ape1, String dni, String codpo, String localidad, String sex,String exidio1, String exidio2) {
+
+    public static void rellenaExCandiRTabla(String nombre, String ape1, String dni, String codpo, String localidad, String sex,String exidio1, String exidio2, String niv) {
 
    ResultSet rsExCan = null;
  
        
-        String sqlExCan = "call consultaExportacionCandidato('"+ nombre +"','"+ape1+"','"+dni+"','"+codpo+"','"+localidad+"','"+sex+"','"+exidio1+"','"+exidio2+"')";
+        String sqlExCan = "call consultaExportacionCandidato('"+ nombre +"','"+ape1+"','"+dni+"','"+codpo+"','"+localidad+"','"+sex+"','"+exidio1+"','"+exidio2+"','"+niv+"')";
         try {
             rsExCan = MySql.connect.st.executeQuery(sqlExCan);
         } catch (SQLException ex) {

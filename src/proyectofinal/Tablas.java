@@ -1,9 +1,11 @@
 package proyectofinal;
 
+import static BBDD.MySql.connect;
 import BBDD.MySqlConsultas;
 import BBDD.MySqlInserciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -152,12 +154,20 @@ public class Tablas {
     
     public static void recogerFormacionReglada() throws SQLException{
     int filas=tFormacionReglada.getRowCount()-1;
-   
+    ResultSet rsnv=null;
+    String niv=null;
     String anho=String.valueOf(modeloForReglada.getValueAt(filas, 0));
     String titulo=String.valueOf(modeloForReglada.getValueAt(filas, 1));
     String institucion=String.valueOf(modeloForReglada.getValueAt(filas, 2));
+    Statement st2 = connect.conexion.createStatement();
+    String sqlnivel = "call niveducativo(" + idCandidato + ",'" + titulo + "','" + institucion + "');";
+                rsnv = st2.executeQuery(sqlnivel);
+                while (rsnv.next()) {
+                    niv = rsnv.getString(1);
+                }
+     
      if(anho != null &&titulo!=null && institucion!=null){
-    MySqlInserciones.insertForReg(idCandidato, anho,  titulo, institucion);
+    MySqlInserciones.insertForReg(idCandidato, anho,  titulo, institucion,niv);
     Tablas.elimFilas();
     MySqlConsultas.rellenaTablas(idCandidato);
    }

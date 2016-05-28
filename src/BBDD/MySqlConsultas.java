@@ -268,7 +268,7 @@ ResultSet rsidi=null;
     public static ResultSet excelformacion(int idCan) throws SQLException {
        ResultSet rsformi=null;
         Statement stfor=connect.conexion.createStatement();
-        String sql = "select descripcion from formacion where idCandidato=" + idCan + ";";
+        String sql = "select descripcion, niveledu from formacion where idCandidato=" + idCan + ";";
         String niv=null;
         rsformi = stfor.executeQuery(sql);
    

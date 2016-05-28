@@ -14,8 +14,8 @@ import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.format.UnderlineStyle;
+import jxl.write.Colour;
 import jxl.write.Label;
-import jxl.write.Number;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
@@ -30,8 +30,8 @@ import static proyectofinal.Menu.exidio1;
 import static proyectofinal.Menu.exidio2;
 import static proyectofinal.Menu.exloca;
 import static proyectofinal.Menu.exnombre;
+import static proyectofinal.Menu.exnvedu;
 import static proyectofinal.Menu.exsexo;
-import static proyectofinal.Menu.tExportCan;
 
 /**
  *
@@ -41,6 +41,9 @@ public class Writable {
 
     private WritableCellFormat timesBoldUnderline;
     private WritableCellFormat times;
+    private WritableCellFormat cellFormatColorAzul;
+     private WritableCellFormat cellFormatColorVerde;
+      private WritableCellFormat cellFormatColorNaranja;
     private String inputFile;
 
     public void setOutputFile(String inputFile) {
@@ -72,6 +75,12 @@ public class Writable {
 
         // DEFINIR EL FORMATO DE LA CELDA CON LO QUE CREAMOS ANTES
         times = new WritableCellFormat(times10pt);
+       cellFormatColorAzul=new WritableCellFormat(times);
+        cellFormatColorAzul.setBackground(Colour.ICE_BLUE);
+        cellFormatColorVerde=new WritableCellFormat(times);
+        cellFormatColorVerde.setBackground(Colour.LIGHT_GREEN);
+          cellFormatColorNaranja=new WritableCellFormat(times);
+        cellFormatColorNaranja.setBackground(Colour.LAVENDER);
 
         // UNIR LAS CELDAS
         times.setWrap(true);
@@ -83,6 +92,10 @@ public class Writable {
         CellView cv = new CellView();
         cv.setFormat(times);
         cv.setFormat(timesBoldUnderline);
+//            CellView cv2 = new CellView();
+//        cv2.setFormat(times);
+//        cv2.setFormat(timesBoldUnderline);
+//        cv2.
 
         addCaption(sheet, 0, 0, "ID");
         addCaption(sheet, 1, 0, "Nombre       ");
@@ -113,7 +126,7 @@ public class Writable {
         int[] columnaDatosPersonales = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
         //BUCLE FILAS
-        String sqlid = "call consultaExportacionCandidato('" + exnombre + "','" + exapel1 + "','" + exdni + "','" + excp + "','" + exloca + "','" + exsexo + "','" + exidio1 + "','" + exidio2 + "')";
+        String sqlid = "call consultaExportacionCandidato('" + exnombre + "','" + exapel1 + "','" + exdni + "','" + excp + "','" + exloca + "','" + exsexo + "','" + exidio1 + "','" + exidio2 + "','"+exnvedu+"');";
         rsid = MySql.connect.st.executeQuery(sqlid);
         while (rsid.next()) {
             filas = filas + 1;
@@ -123,7 +136,7 @@ int c=0;
             for ( c = 0; c < columnaDatosPersonales.length; c++) {
                 y = c + 1;
                 temporal = rsid.getString(y);
-                addLabel(sheet, c, filas, temporal);
+                addLabelCoral(sheet, c, filas, temporal);
 
                 
                 //FORMATO A LAS CELDAS
@@ -138,9 +151,11 @@ int c=0;
             while(rsfor.next()){
                 filas = filas + 1;
              String tempfor=rsfor.getString(1);
-              addLabel(sheet, 1, filas, "Formación:");
+              String tempfor2=rsfor.getString(2);
+              addLabelAzul(sheet, 1, filas, "Formación:");
               
-             addLabel(sheet, 2, filas, tempfor);
+             addLabelVerde(sheet, 2, filas, tempfor);
+              addLabelVerde(sheet, 3, filas, tempfor2);
             
             }
             
@@ -150,9 +165,9 @@ int c=0;
                 filas=filas+1;
             String iditemp=rsidi.getString(1);
              String idiniv=rsidi.getString(2);
-             addLabel(sheet, 1, filas, "Idiomas:");
-             addLabel(sheet, 2, filas, iditemp);
-             addLabel(sheet, 3, filas, idiniv);
+             addLabelAzul(sheet, 1, filas, "Idiomas:");
+             addLabelVerde(sheet, 2, filas, iditemp);
+             addLabelVerde(sheet, 3, filas, idiniv);
             
             
             }
@@ -167,6 +182,7 @@ int c=0;
         Label label;
         label = new Label(column, row, s, timesBoldUnderline);
         sheet.addCell(label);
+        
 
     }
 
@@ -176,6 +192,30 @@ int c=0;
 
         Label label;
         label = new Label(column, row, s, times);
+        sheet.addCell(label);
+
+    }
+     private void addLabelAzul(WritableSheet sheet, int column, int row, String s)
+            throws WriteException, RowsExceededException {
+
+        Label label;
+        label = new Label(column, row, s, cellFormatColorAzul);
+        sheet.addCell(label);
+
+    }
+      private void addLabelVerde(WritableSheet sheet, int column, int row, String s)
+            throws WriteException, RowsExceededException {
+
+        Label label;
+        label = new Label(column, row, s, cellFormatColorVerde);
+        sheet.addCell(label);
+
+    }
+       private void addLabelCoral(WritableSheet sheet, int column, int row, String s)
+            throws WriteException, RowsExceededException {
+
+        Label label;
+        label = new Label(column, row, s, cellFormatColorNaranja);
         sheet.addCell(label);
 
     }
